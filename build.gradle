@@ -9,3 +9,14 @@ dependencies {
     compile "org.eclipse.jetty:jetty-servlet:9.2.3.v20140905"
     compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.0"
 }
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'nz.hogwild.Application'
+    }
+    baseName = 'hogwild-all'
+    from configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it).matching{exclude{it.path.contains('META-INF')}}
+    }
+    with jar
+}

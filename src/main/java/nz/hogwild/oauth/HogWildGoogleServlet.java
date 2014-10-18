@@ -1,3 +1,5 @@
+package nz.hogwild.oauth;
+
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.common.OAuthProviderType;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -20,7 +22,6 @@ public class HogWildGoogleServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
         req.getSession(true);
         try {
             OAuthClientRequest request = OAuthClientRequest

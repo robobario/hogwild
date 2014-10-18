@@ -1,3 +1,7 @@
+package nz.hogwild;
+
+import nz.hogwild.oauth.HogWildGoogleCallbackServlet;
+import nz.hogwild.oauth.HogWildGoogleServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -9,9 +13,9 @@ public class Application {
             ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
             context.setContextPath("/");
             server.setHandler(context);
-            String hogwildHostname = System.getenv("HOGWILD_HOSTNAME");
-            String hogwildGoogleClientId = System.getenv("HOGWILD_GOOGLE_CLIENT_ID");
-            String hogwildGoogleSecret = System.getenv("HOGWILD_GOOGLE_SECRET");
+            String hogwildHostname = env("HOGWILD_HOSTNAME");
+            String hogwildGoogleClientId = env("HOGWILD_GOOGLE_CLIENT_ID");
+            String hogwildGoogleSecret = env("HOGWILD_GOOGLE_SECRET");
             context.addServlet(new ServletHolder(new HogWildGoogleServlet(hogwildHostname, hogwildGoogleClientId)), "/google");
             context.addServlet(new ServletHolder(new HogWildGoogleCallbackServlet(hogwildHostname, hogwildGoogleClientId, hogwildGoogleSecret)), "/oauth2callback");
             server.start();
@@ -19,5 +23,13 @@ public class Application {
         }catch (Throwable t){
             t.printStackTrace();
         }
+    }
+
+    private static String env(String prop) {
+        String getenv = System.getenv(prop);
+        if(getenv == null || getenv.isEmpty()){
+            throw new RuntimeException("prop " + prop + " was null or empty");
+        }
+        return getenv;
     }
 }

@@ -1,3 +1,5 @@
+package nz.hogwild.oauth;
+
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -27,7 +29,6 @@ public class HogWildGoogleCallbackServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
         req.getSession(true);
         try {
             OAuthAuthzResponse oar = OAuthAuthzResponse.oauthCodeAuthzResponse(req);
