@@ -28,7 +28,7 @@ public class HogWildGoogleServlet extends HttpServlet {
             OAuthClientRequest request = OAuthClientRequest
                     .authorizationProvider(OAuthProviderType.GOOGLE)
                     .setClientId(googleClientId).setResponseType(ResponseType.CODE.toString())
-                    .setRedirectURI("http://" + host + "/oauth2callback")
+                    .setRedirectURI("http://" + host + "/oauth2callback").setScope("openid email")
                     .buildQueryMessage();
             resp.sendRedirect(request.getLocationUri());
         } catch (OAuthSystemException e) {
