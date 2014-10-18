@@ -13,7 +13,11 @@ public class HogWildServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/hogwild.html");
+        InputStream inputStream = getStream();
         ByteStreams.copy(inputStream, resp.getOutputStream());
+    }
+
+    InputStream getStream() {
+        return getClass().getClassLoader().getResourceAsStream("hogwild.html");
     }
 }

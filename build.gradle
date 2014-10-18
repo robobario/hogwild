@@ -10,6 +10,7 @@ dependencies {
     compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.0"
     compile "com.google.code.gson:gson:2.3"
     compile "com.google.guava:guava:18.0"
+    testCompile "junit:junit:4.11"
 }
 
 task fatJar(type: Jar) {
