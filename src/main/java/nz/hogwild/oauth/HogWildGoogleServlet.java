@@ -3,6 +3,7 @@ package nz.hogwild.oauth;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.common.OAuthProviderType;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+import org.apache.oltu.oauth2.common.message.types.ResponseType;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +27,7 @@ public class HogWildGoogleServlet extends HttpServlet {
         try {
             OAuthClientRequest request = OAuthClientRequest
                     .authorizationProvider(OAuthProviderType.GOOGLE)
-                    .setClientId(googleClientId)
+                    .setClientId(googleClientId).setResponseType(ResponseType.CODE.toString())
                     .setRedirectURI("http://" + host + "/oauth2callback")
                     .buildQueryMessage();
             resp.sendRedirect(request.getLocationUri());
