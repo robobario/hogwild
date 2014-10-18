@@ -40,7 +40,7 @@ public class HogWildGoogleCallbackServlet extends HttpServlet {
                     .setClientSecret(secret)
                     .setRedirectURI("http://" + host + "/oauth2callback")
                     .setCode(code)
-                    .buildHeaderMessage();
+                    .buildBodyMessage();
             OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
             OAuthJSONAccessTokenResponse oAuthResponse = oAuthClient.accessToken(request);
 
