@@ -2,6 +2,7 @@ package nz.hogwild;
 
 import nz.hogwild.oauth.HogWildGoogleCallbackServlet;
 import nz.hogwild.oauth.HogWildGoogleServlet;
+import nz.hogwild.web.HogWildServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -18,6 +19,7 @@ public class Application {
             String hogwildGoogleSecret = env("HOGWILD_GOOGLE_SECRET");
             context.addServlet(new ServletHolder(new HogWildGoogleServlet(hogwildHostname, hogwildGoogleClientId)), "/google");
             context.addServlet(new ServletHolder(new HogWildGoogleCallbackServlet(hogwildHostname, hogwildGoogleClientId, hogwildGoogleSecret)), "/oauth2callback");
+            context.addServlet(new ServletHolder(new HogWildServlet()), "/");
             server.start();
             server.join();
         }catch (Throwable t){
