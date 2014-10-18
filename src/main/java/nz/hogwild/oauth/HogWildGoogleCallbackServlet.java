@@ -49,8 +49,9 @@ public class HogWildGoogleCallbackServlet extends HttpServlet {
 
             String accessToken = oAuthResponse.getAccessToken();
 
-            OAuthClientRequest bearerClientRequest = new OAuthBearerClientRequest("https://www.googleapis.com/userinfo/email")
+            OAuthClientRequest bearerClientRequest = new OAuthBearerClientRequest("https://www.googleapis.com/userinfo/email?alt=json")
                     .setAccessToken(accessToken).buildQueryMessage();
+            bearerClientRequest.setHeader(OAuth.HeaderType.CONTENT_TYPE, OAuth.ContentType.JSON);
 
             OAuthResourceResponse resourceResponse = oAuthClient.resource(bearerClientRequest, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
             resp.getWriter().write(resourceResponse.getBody());
