@@ -1,5 +1,8 @@
 package nz.hogwild.oauth;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import nz.hogwild.service.SessionStore;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthBearerClientRequest;
@@ -16,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class HogWildGoogleCallbackServlet extends HttpServlet {
@@ -32,7 +36,7 @@ public class HogWildGoogleCallbackServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession(true);
+        HttpSession session = req.getSession(true);
         try {
             OAuthAuthzResponse oar = OAuthAuthzResponse.oauthCodeAuthzResponse(req);
             String code = oar.getCode();
@@ -54,8 +58,9 @@ public class HogWildGoogleCallbackServlet extends HttpServlet {
             bearerClientRequest.setHeader(OAuth.HeaderType.CONTENT_TYPE, OAuth.ContentType.JSON);
 
             OAuthResourceResponse resourceResponse = oAuthClient.resource(bearerClientRequest, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
-            resp.getWriter().write(resourceResponse.getBody());
-
+            JsonNode jsonNode = new ObjectMapper().reader().readTree(resourceResponse.getBody());
+            JsonNode email = jsonNode.get("data").get("email");
+            SessionStore.sessionStore().addUser(session.getId(), email.textValue());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

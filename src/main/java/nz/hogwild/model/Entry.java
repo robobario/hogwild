@@ -1,9 +1,10 @@
 package nz.hogwild.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity
-public class Entry {
+@Entity(name = "entry")
+public class Entry implements Serializable{
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "entryIdGen", strategy = GenerationType.SEQUENCE)
@@ -13,16 +14,16 @@ public class Entry {
     @Column(name = "body")
     private  String body;
 
-    @Column(name = "author")
-    private  String author;
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name="author_id", nullable=false, updatable=false)
+    private  User author;
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name="story_id", nullable=false, updatable=false)
+    private Story story;
 
     public Entry(){
 
-    }
-    public Entry(int id, String body, String author) {
-        this.id = id;
-        this.body = body;
-        this.author = author;
     }
     public int getId() {
         return id;
@@ -36,7 +37,7 @@ public class Entry {
         this.body = body;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 
@@ -45,7 +46,15 @@ public class Entry {
         return body;
     }
 
-    public String getAuthor() {
+    public User getAuthor() {
         return author;
+    }
+
+    public Story getStory() {
+        return story;
+    }
+
+    public void setStory(Story story) {
+        this.story = story;
     }
 }

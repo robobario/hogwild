@@ -1,9 +1,13 @@
 package nz.hogwild.model;
 
-import javax.persistence.*;
+import com.google.common.collect.ImmutableSet;
 
-@Entity
-public class User {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
+
+@Entity(name="user")
+public class User implements Serializable{
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "userIdGen", strategy = GenerationType.SEQUENCE)
@@ -16,9 +20,21 @@ public class User {
     @Column(name = "characterName")
     private  String characterName;
 
+    @ManyToMany(mappedBy="authors")
+    public Set<Story> stories;
+
     public User(){
 
     }
+
+    public Set<Story> getStories() {
+        return ImmutableSet.copyOf(stories);
+    }
+
+    public void setStories(Set<Story> stories) {
+        this.stories = stories;
+    }
+
     public User(String email) {
     }
     public int getId() {

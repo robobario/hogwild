@@ -1,5 +1,7 @@
 package nz.hogwild;
 
+import nz.hogwild.service.SessionStore;
+import nz.hogwild.service.StoryService;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
@@ -50,6 +52,16 @@ public class Context extends WebMvcConfigurerAdapter {
         dataSource.setPassword(getEnv(key));
 
         return dataSource;
+    }
+
+    @Bean
+    public StoryService storyService(){
+        return new StoryService();
+    }
+
+    @Bean
+    public SessionStore sessionStore(){
+        return SessionStore.sessionStore();
     }
 
     private String getEnv(String key) {
