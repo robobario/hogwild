@@ -46,11 +46,11 @@ public class StoryService {
 
     private List<Entry> getVisibleToUser(List<Entry> entries, Integer loggedInUserId, List<Integer> authorIds) {
         int authorIndex = authorIds.indexOf(loggedInUserId);
-        Integer previousUser = authorIds.get(authorIndex - 1 % authorIds.size());
-        for (int i = entries.size() - 1; i >= 0 ; i--) {
+        Integer previousUser = authorIds.get((authorIndex - 1) % authorIds.size());
+        for (int i = (entries.size() - 1); i >= 0 ; i--) {
             int id = entries.get(i).getId();
             if(entries.get(i).getId() == authorIndex || id == previousUser){
-                return entries.subList(0, i);
+                return entries.subList(0, i + 1);
             }
         }
         return ImmutableList.of();
