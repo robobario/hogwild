@@ -14,7 +14,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class Application {
     public static void main(String[] args) {
         try {
-            Class.forName("org.postgresql.Driver");
             Server server = new Server(8080);
             ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
             context.setContextPath("/");
