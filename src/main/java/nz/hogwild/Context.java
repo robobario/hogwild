@@ -49,7 +49,7 @@ public class Context extends WebMvcConfigurerAdapter {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(getEnv("jdbc.driverClassName"));
         String url = env.getProperty("jdbc.url");
-        dataSource.setUrl(url == null ? "jdbc:postgres://" + getEnv("POSTGRES_PORT_5432_TCP_ADDR") + ":" + getEnv("POSTGRES_PORT_5432_TCP_ADDR") + "/hogwild" : url);
+        dataSource.setUrl(url == null ? "jdbc:postgresql://" + getEnv("POSTGRES_PORT_5432_TCP_ADDR") + ":" + getEnv("POSTGRES_PORT_5432_TCP_ADDR") + "/hogwild" : url);
         dataSource.setUsername(getEnv("jdbc.user"));
         String key = "jdbc.pass";
         dataSource.setPassword(getEnv(key));
