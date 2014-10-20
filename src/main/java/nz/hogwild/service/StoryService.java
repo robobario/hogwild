@@ -82,7 +82,7 @@ public class StoryService {
         }
         for (Entry entry : entries){
             ApiEntry element = new ApiEntry();
-            element.setCharacterName(entry.getAuthor().getEmail());
+            element.setCharacterName(entry.getAuthor().getCharacterName());
             element.setSpoiler(true);
             builder.add(element);
         }
