@@ -44,12 +44,16 @@ public class StoryService {
         return toApi(discard, entries.subList(discard.size(), entries.size()));
     }
 
-    private List<Entry> getVisibleToUser(List<Entry> entries, Integer loggedInUserId, List<Integer> authorIds) {
+    public static List<Entry> getVisibleToUser(List<Entry> entries, Integer loggedInUserId, List<Integer> authorIds) {
         int authorIndex = authorIds.indexOf(loggedInUserId);
-        Integer previousUser = authorIds.get((authorIndex - 1) % authorIds.size());
+        int previousUserIndex = authorIndex - 1;
+        if(previousUserIndex == -1){
+            previousUserIndex = authorIds.size() - 1;
+        }
+        int previousUser = authorIds.get(previousUserIndex);
         for (int i = (entries.size() - 1); i >= 0 ; i--) {
-            int id = entries.get(i).getId();
-            if(entries.get(i).getId() == authorIndex || id == previousUser){
+            int id = entries.get(i).getAuthor().getId();
+            if(id == loggedInUserId || id == previousUser){
                 return entries.subList(0, i + 1);
             }
         }
