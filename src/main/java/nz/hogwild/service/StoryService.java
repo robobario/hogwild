@@ -34,7 +34,7 @@ public class StoryService {
     }
 
     @Transactional
-    public List<ApiEntry> getEntries(long storyId, Integer loggedInUserId){
+    public List<ApiEntry> getEntries(int storyId, Integer loggedInUserId){
         Session session = sessionFactory.getCurrentSession();
         Story story = (Story) session.get(Story.class, storyId);
         List<Entry> entries = story.getEntries();
