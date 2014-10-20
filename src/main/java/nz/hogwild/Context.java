@@ -48,7 +48,8 @@ public class Context extends WebMvcConfigurerAdapter {
     public DataSource restDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(getEnv("jdbc.driverClassName"));
-        dataSource.setUrl(getEnv("jdbc.url"));
+        String url = env.getProperty("jdbc.url");
+        dataSource.setUrl(url == null ? "jdbc:postgres://" + getEnv("POSTGRES_PORT_5432_TCP_ADDR") + ":" + getEnv("POSTGRES_PORT_5432_TCP_ADDR") : url);
         dataSource.setUsername(getEnv("jdbc.user"));
         String key = "jdbc.pass";
         dataSource.setPassword(getEnv(key));
