@@ -4,7 +4,7 @@ public class ApiEntry {
 
     private  String body;
 
-    private String authorEmail;
+    private String characterName;
 
     private boolean isSpoiler;
 
@@ -20,12 +20,12 @@ public class ApiEntry {
         this.body = body;
     }
 
-    public String getAuthorEmail() {
-        return authorEmail;
+    public String getCharacterName() {
+        return characterName;
     }
 
-    public void setAuthorEmail(String authorEmail) {
-        this.authorEmail = authorEmail;
+    public void setCharacterName(String characterName) {
+        this.characterName = characterName;
     }
 
     public boolean isSpoiler() {

@@ -1,6 +1,7 @@
 package nz.hogwild.service;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import nz.hogwild.model.Author;
 import nz.hogwild.model.Entry;
 import nz.hogwild.model.Story;
@@ -39,9 +40,24 @@ public class StoryService {
         Story story = (Story) session.get(Story.class, storyId);
         List<Entry> entries = story.getEntries();
         List<Integer> authorIds = getAuthorIds(story);
-        Integer position = loggedInUserId == null ? 0 : authorIds.get(loggedInUserId);
-        List<Entry> discard = ListSpoilerDiscarder.discard(entries, authorIds.size(), position);
+        List<Entry> discard = loggedInUserId == null ? getVisibleToAll(entries, authorIds) : getVisibleToUser(entries,loggedInUserId, authorIds);
         return toApi(discard, entries.subList(discard.size(), entries.size()));
+    }
+
+    private List<Entry> getVisibleToUser(List<Entry> entries, Integer loggedInUserId, List<Integer> authorIds) {
+        int authorIndex = authorIds.indexOf(loggedInUserId);
+        Integer previousUser = authorIds.get(authorIndex - 1 % authorIds.size());
+        for (int i = entries.size() - 1; i <= 0 ; i--) {
+            int id = entries.get(i).getId();
+            if(entries.get(i).getId() == authorIndex || id == previousUser){
+                return entries.subList(0, i);
+            }
+        }
+        return ImmutableList.of();
+    }
+
+    private List<Entry> getVisibleToAll(List<Entry> entries, List<Integer> authorIds) {
+        return entries.size() > authorIds.size() ? entries.subList(0, entries.size() - authorIds.size()) : ImmutableList.<Entry>of();
     }
 
     @Transactional
@@ -56,13 +72,13 @@ public class StoryService {
         for (Entry entry : discard) {
             ApiEntry element = new ApiEntry();
             element.setBody(entry.getBody());
-            element.setAuthorEmail(entry.getAuthor().getEmail());
+            element.setCharacterName(entry.getAuthor().getCharacterName());
             element.setSpoiler(false);
             builder.add(element);
         }
         for (Entry entry : entries){
             ApiEntry element = new ApiEntry();
-            element.setAuthorEmail(entry.getAuthor().getEmail());
+            element.setCharacterName(entry.getAuthor().getEmail());
             element.setSpoiler(true);
             builder.add(element);
         }
