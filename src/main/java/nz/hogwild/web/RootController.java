@@ -37,7 +37,11 @@ public class RootController {
     List<ApiEntry> story(HttpServletRequest request, @PathVariable("id") int id){
         HttpSession session = request.getSession(true);
         String email = sessionStore.get(session.getId());
-        Author author = storyService.getUser(email);
-        return storyService.getEntries(id, author.getId());
+        Integer id1 = null;
+        if(email != null) {
+            Author author = storyService.getUser(email);
+            id1 = author.getId();
+        }
+        return storyService.getEntries(id, id1);
     }
 }
