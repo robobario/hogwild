@@ -1,8 +1,6 @@
 package nz.hogwild.web;
 
-import com.google.common.collect.ImmutableList;
-import nz.hogwild.model.Entry;
-import nz.hogwild.model.User;
+import nz.hogwild.model.Author;
 import nz.hogwild.service.ApiEntry;
 import nz.hogwild.service.SessionStore;
 import nz.hogwild.service.StoryService;
@@ -39,7 +37,7 @@ public class RootController {
     List<ApiEntry> story(HttpServletRequest request, @PathVariable("id") int id){
         HttpSession session = request.getSession(true);
         String email = sessionStore.get(session.getId());
-        User user = storyService.getUser(email);
-        return storyService.getEntries(id, user.getId());
+        Author author = storyService.getUser(email);
+        return storyService.getEntries(id, author.getId());
     }
 }

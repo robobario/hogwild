@@ -1,11 +1,9 @@
 package nz.hogwild.service;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import nz.hogwild.model.Author;
 import nz.hogwild.model.Entry;
 import nz.hogwild.model.Story;
-import nz.hogwild.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,7 +11,6 @@ import org.hibernate.criterion.Restrictions;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -26,10 +23,10 @@ public class StoryService {
     @Transactional
     public void addEntryToStory(long authorId, long storyId, String body){
         Session session = sessionFactory.getCurrentSession();
-        User user = (User) session.get(User.class, authorId);
+        Author author = (Author) session.get(Author.class, authorId);
         Story story = (Story) session.get(Story.class, storyId);
         Entry entry = new Entry();
-        entry.setAuthor(user);
+        entry.setAuthor(author);
         entry.setStory(story);
         entry.setBody(body);
         story.addEntry(entry);
@@ -48,10 +45,10 @@ public class StoryService {
     }
 
     @Transactional
-    public User getUser(String email) {
+    public Author getUser(String email) {
         Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("email", email));
-        return (User) criteria.uniqueResult();
+        Criteria criteria = session.createCriteria(Author.class).add(Restrictions.eq("email", email));
+        return (Author) criteria.uniqueResult();
     }
 
     private List<ApiEntry> toApi(List<Entry> discard, List<Entry> entries) {
@@ -73,9 +70,9 @@ public class StoryService {
     }
 
     private List<Integer> getAuthorIds(Story story) {
-        List<User> author = story.getAuthors();
+        List<Author> author = story.getAuthors();
         List<Integer> ids = newArrayList();
-        for (User user : author) {
+        for (Author user : author) {
             ids.add(user.getId());
         }
         return ids;

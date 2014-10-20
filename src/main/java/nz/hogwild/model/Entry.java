@@ -16,7 +16,7 @@ public class Entry implements Serializable{
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name="author_id", nullable=false, updatable=false)
-    private  User author;
+    private Author author;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name="story_id", nullable=false, updatable=false)
@@ -37,7 +37,7 @@ public class Entry implements Serializable{
         this.body = body;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
@@ -46,7 +46,7 @@ public class Entry implements Serializable{
         return body;
     }
 
-    public User getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 

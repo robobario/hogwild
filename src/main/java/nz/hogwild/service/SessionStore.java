@@ -1,8 +1,6 @@
 package nz.hogwild.service;
 
 import com.google.common.collect.Maps;
-import nz.hogwild.model.User;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.Map;
 

@@ -21,7 +21,7 @@ public class Story implements Serializable{
             inverseJoinColumns=
             @JoinColumn(name="author_id")
     )
-    private List<User> authors;
+    private List<Author> authors;
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
     private List<Entry> entries;
@@ -37,11 +37,11 @@ public class Story implements Serializable{
         this.id = id;
     }
 
-    public void setAuthors(List<User> author) {
+    public void setAuthors(List<Author> author) {
         this.authors = author;
     }
 
-    public List<User> getAuthors() {
+    public List<Author> getAuthors() {
         return ImmutableList.copyOf(authors);
     }
 

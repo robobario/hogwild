@@ -6,24 +6,24 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Entity(name="user")
-public class User implements Serializable{
+@Entity(name="author")
+public class Author implements Serializable{
     @Id
     @Column(name = "id")
-    @GeneratedValue(generator = "userIdGen", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "userIdGen", sequenceName = "user_id_seq")
+    @GeneratedValue(generator = "authorIdGen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "authorIdGen", sequenceName = "author_id_seq")
     private  int id;
 
     @Column(name = "email")
     private  String email;
 
-    @Column(name = "characterName")
+    @Column(name = "character_name")
     private  String characterName;
 
     @ManyToMany(mappedBy="authors")
     public Set<Story> stories;
 
-    public User(){
+    public Author(){
 
     }
 
@@ -35,7 +35,7 @@ public class User implements Serializable{
         this.stories = stories;
     }
 
-    public User(String email) {
+    public Author(String email) {
     }
     public int getId() {
         return id;
