@@ -4,6 +4,10 @@ public class AddEntry {
     private String body;
     private int authorId;
 
+    public AddEntry(){
+
+    }
+
     public AddEntry(String body, int authorId) {
         this.body = body;
         this.authorId = authorId;

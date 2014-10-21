@@ -45,7 +45,9 @@ public class RootController {
 
 
     @RequestMapping(value = "/app/story", method = RequestMethod.POST)
-    public void addEntry(@RequestBody AddEntry entry){
-        storyService.addEntryToStory(entry.getAuthorId(),1l, entry.getBody());
+    @ResponseBody
+    public boolean addEntry(@RequestBody AddEntry entry){
+        storyService.addEntryToStory(entry.getAuthorId(),1, entry.getBody());
+        return true;
     }
 }

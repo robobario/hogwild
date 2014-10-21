@@ -22,7 +22,7 @@ public class StoryService {
     private SessionFactory sessionFactory;
 
     @Transactional
-    public void addEntryToStory(long authorId, long storyId, String body){
+    public void addEntryToStory(int authorId, int storyId, String body){
         Session session = sessionFactory.getCurrentSession();
         Author author = (Author) session.get(Author.class, authorId);
         Story story = (Story) session.get(Story.class, storyId);
