@@ -61,7 +61,7 @@ public class StoryService {
             Entry entry = entries.get(entries.size() - 1);
             int lastAuthor = entry.getAuthor().getId();
             List<Integer> authorIds = getAuthorIds(story);
-            Integer lastAuthorIndex = authorIds.get(lastAuthor);
+            Integer lastAuthorIndex = authorIds.indexOf(lastAuthor);
             Integer nextAuthorIndex = (lastAuthorIndex + 1) % authorIds.size();
             return authorIds.get(nextAuthorIndex);
         }}catch (Exception e){
