@@ -1,7 +1,9 @@
 package nz.hogwild.web;
 
+import com.google.common.base.Objects;
 import nz.hogwild.model.Author;
 import nz.hogwild.service.ApiEntry;
+import nz.hogwild.service.ApiStory;
 import nz.hogwild.service.SessionStore;
 import nz.hogwild.service.StoryService;
 import org.springframework.core.io.ClassPathResource;
@@ -32,16 +34,18 @@ public class RootController {
         return new ClassPathResource("hogwild.html");
     }
 
-    @RequestMapping(value = "/app/story/{id}/", method = RequestMethod.GET)
+    @RequestMapping(value = "/app/story", method = RequestMethod.GET)
     @ResponseBody
-    List<ApiEntry> story(HttpServletRequest request, @PathVariable("id") int id){
+    public ApiStory story(HttpServletRequest request){
         HttpSession session = request.getSession(true);
         String email = sessionStore.get(session.getId());
-        Integer id1 = null;
+        Integer authorId = null;
         if(email != null) {
             Author author = storyService.getUser(email);
-            id1 = author.getId();
+            authorId = author.getId();
         }
-        return storyService.getEntries(id, id1);
+        List<ApiEntry> entries = storyService.getEntries(1, authorId);
+        Integer nextAuthor = storyService.getNextAuthor(1);
+        return new ApiStory(!(authorId == null) && Objects.equal(nextAuthor,authorId), entries);
     }
 }

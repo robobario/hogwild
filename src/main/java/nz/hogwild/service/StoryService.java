@@ -44,6 +44,23 @@ public class StoryService {
         return toApi(discard, entries.subList(discard.size(), entries.size()));
     }
 
+    @Transactional
+    public Integer getNextAuthor(int storyId){
+        Session session = sessionFactory.getCurrentSession();
+        Story story = (Story) session.get(Story.class, storyId);
+        List<Entry> entries = story.getEntries();
+        if(entries.isEmpty()){
+            return null;
+        }else{
+            Entry entry = entries.get(entries.size() - 1);
+            int lastAuthor = entry.getAuthor().getId();
+            List<Integer> authorIds = getAuthorIds(story);
+            Integer lastAuthorIndex = authorIds.get(lastAuthor);
+            Integer nextAuthorIndex = (lastAuthorIndex + 1) % authorIds.size();
+            return authorIds.get(nextAuthorIndex);
+        }
+    }
+
     public static List<Entry> getVisibleToUser(List<Entry> entries, Integer loggedInUserId, List<Integer> authorIds) {
         int authorIndex = authorIds.indexOf(loggedInUserId);
         int previousUserIndex = authorIndex - 1;
