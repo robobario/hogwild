@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class StoryServiceTestCase {
+public class StoryServiceTest {
 
     @Test
     public void test(){

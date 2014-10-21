@@ -36,12 +36,17 @@ public class StoryService {
 
     @Transactional
     public List<ApiEntry> getEntries(int storyId, Integer loggedInUserId){
-        Session session = sessionFactory.getCurrentSession();
-        Story story = (Story) session.get(Story.class, storyId);
-        List<Entry> entries = story.getEntries();
-        List<Integer> authorIds = getAuthorIds(story);
-        List<Entry> discard = loggedInUserId == null ? getVisibleToAll(entries, authorIds) : getVisibleToUser(entries,loggedInUserId, authorIds);
-        return toApi(discard, entries.subList(discard.size(), entries.size()));
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            Story story = (Story) session.get(Story.class, storyId);
+            List<Entry> entries = story.getEntries();
+            List<Integer> authorIds = getAuthorIds(story);
+            List<Entry> discard = loggedInUserId == null ? getVisibleToAll(entries, authorIds) : getVisibleToUser(entries, loggedInUserId, authorIds);
+            return toApi(discard, entries.subList(discard.size(), entries.size()));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @Transactional
