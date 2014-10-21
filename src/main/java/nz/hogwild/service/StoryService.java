@@ -51,6 +51,7 @@ public class StoryService {
 
     @Transactional
     public Integer getNextAuthor(int storyId){
+        try{
         Session session = sessionFactory.getCurrentSession();
         Story story = (Story) session.get(Story.class, storyId);
         List<Entry> entries = story.getEntries();
@@ -63,6 +64,9 @@ public class StoryService {
             Integer lastAuthorIndex = authorIds.get(lastAuthor);
             Integer nextAuthorIndex = (lastAuthorIndex + 1) % authorIds.size();
             return authorIds.get(nextAuthorIndex);
+        }}catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
