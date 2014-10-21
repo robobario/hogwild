@@ -61,6 +61,13 @@ public class StoryService {
         }
     }
 
+    @Transactional
+    public Author getUser(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Author.class).add(Restrictions.eq("email", email));
+        return (Author) criteria.uniqueResult();
+    }
+
     public static List<Entry> getVisibleToUser(List<Entry> entries, Integer loggedInUserId, List<Integer> authorIds) {
         int authorIndex = authorIds.indexOf(loggedInUserId);
         int previousUserIndex = authorIndex - 1;
@@ -79,13 +86,6 @@ public class StoryService {
 
     private List<Entry> getVisibleToAll(List<Entry> entries, List<Integer> authorIds) {
         return entries.size() > authorIds.size() ? entries.subList(0, entries.size() - authorIds.size()) : ImmutableList.<Entry>of();
-    }
-
-    @Transactional
-    public Author getUser(String email) {
-        Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Author.class).add(Restrictions.eq("email", email));
-        return (Author) criteria.uniqueResult();
     }
 
     private List<ApiEntry> toApi(List<Entry> discard, List<Entry> entries) {

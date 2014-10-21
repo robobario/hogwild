@@ -2,17 +2,11 @@ package nz.hogwild.web;
 
 import com.google.common.base.Objects;
 import nz.hogwild.model.Author;
-import nz.hogwild.service.ApiEntry;
-import nz.hogwild.service.ApiStory;
-import nz.hogwild.service.SessionStore;
-import nz.hogwild.service.StoryService;
+import nz.hogwild.service.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -47,5 +41,11 @@ public class RootController {
         List<ApiEntry> entries = storyService.getEntries(1, authorId);
         Integer nextAuthor = storyService.getNextAuthor(1);
         return new ApiStory(!(authorId == null) && Objects.equal(nextAuthor,authorId), entries);
+    }
+
+
+    @RequestMapping(value = "/app/story", method = RequestMethod.POST)
+    public void addEntry(@RequestBody AddEntry entry){
+        storyService.addEntryToStory(entry.getAuthorId(),1l, entry.getBody());
     }
 }
