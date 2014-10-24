@@ -61,6 +61,7 @@ public class HogWildGoogleCallbackServlet extends HttpServlet {
             JsonNode jsonNode = new ObjectMapper().reader().readTree(resourceResponse.getBody());
             JsonNode email = jsonNode.get("data").get("email");
             SessionStore.sessionStore().addUser(session.getId(), email.textValue());
+            resp.sendRedirect("/app/story");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

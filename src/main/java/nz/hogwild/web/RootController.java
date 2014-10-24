@@ -46,8 +46,17 @@ public class RootController {
 
     @RequestMapping(value = "/app/story", method = RequestMethod.POST)
     @ResponseBody
-    public boolean addEntry(@RequestBody AddEntry entry){
-        storyService.addEntryToStory(entry.getAuthorId(),1, entry.getBody());
+    public boolean addEntry(@RequestBody AddEntry entry, HttpServletRequest request){
+        HttpSession session = request.getSession(true);
+        String email = sessionStore.get(session.getId());
+        Integer authorId = null;
+        if(email != null) {
+            Author author = storyService.getUser(email);
+            authorId = author.getId();
+        }
+        if(authorId != null){
+            storyService.addEntryToStory(authorId,1, entry.getBody());
+        }
         return true;
     }
 }
