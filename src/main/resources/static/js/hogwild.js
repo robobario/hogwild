@@ -17,7 +17,7 @@ $(document).ready(function() {
             var entry = entries[i];
             var container = $("<div>");
             var heading = $("<h1>");
-            var body = $("<body>");
+            var body = $("<div>");
             heading.text(entry.characterName);
             var bodyParagraphs = toParagraphs(entry.body);
             for (var j = 0; j < bodyParagraphs.length; j++) {
@@ -26,7 +26,6 @@ $(document).ready(function() {
                 p.text(paragraph);
                 body.append(p);
             }
-            body.text(entry.body);
             container.append(heading);
             container.append(body);
             $("#story").append(container);
