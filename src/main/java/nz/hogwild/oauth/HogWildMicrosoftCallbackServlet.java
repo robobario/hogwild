@@ -54,7 +54,6 @@ public class HogWildMicrosoftCallbackServlet extends HttpServlet {
 
             OAuthClientRequest bearerClientRequest = new OAuthBearerClientRequest("https://apis.live.net/v5.0/me")
                     .setAccessToken(accessToken).buildQueryMessage();
-            bearerClientRequest.setHeader(OAuth.HeaderType.CONTENT_TYPE, OAuth.ContentType.JSON);
             bearerClientRequest.setHeader("Accept", OAuth.ContentType.JSON);
             OAuthResourceResponse resourceResponse = oAuthClient.resource(bearerClientRequest, OAuth.HttpMethod.GET, OAuthResourceResponse.class);
             JsonNode jsonNode = new ObjectMapper().reader().readTree(resourceResponse.getBody());
@@ -62,6 +61,7 @@ public class HogWildMicrosoftCallbackServlet extends HttpServlet {
             SessionStore.sessionStore().addUser(session.getId(), email.textValue());
             resp.sendRedirect("/");
         } catch (Exception e) {
+            e.printStackTrace(resp.getWriter());
             throw new RuntimeException(e);
         }
     }
