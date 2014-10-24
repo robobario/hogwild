@@ -1,6 +1,9 @@
 $(document).ready(function() {
     $.getJSON("/app/story", function (data) {
         function toParagraphs(text){
+            if(!text){
+                return [];
+            }
             var lines = text.split("\n");
             var nonEmpty = [];
             for (var i = 0; i < lines.length; i++) {
