@@ -19,7 +19,7 @@ $(document).ready(function() {
             var heading = $("<h1>");
             var body = $("<body>");
             heading.text(entry.characterName);
-            var bodyParagraphs = toParagraphs(enty.body);
+            var bodyParagraphs = toParagraphs(entry.body);
             for (var j = 0; j < bodyParagraphs.length; j++) {
                 var paragraph = bodyParagraphs[j];
                 var p = $("<p>");
@@ -31,6 +31,10 @@ $(document).ready(function() {
             container.append(body);
             $("#story").append(container);
         }
+        var offset = container.offset();
+        $('html, body').animate({
+            scrollTop: offset.top
+        });
         if(data.myTurn){
             var form = $("<form><input type='text'></form>");
             var submit = $("<a>Add</a>");
