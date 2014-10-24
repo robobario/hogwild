@@ -24,7 +24,7 @@ public class Story implements Serializable{
     private List<Author> authors;
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
-    @OrderColumn(name="orders_index")
+    @OrderColumn(name="entry_index")
     private List<Entry> entries;
 
     public Story(){
