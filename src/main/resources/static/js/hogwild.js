@@ -37,7 +37,6 @@ $(document).ready(function() {
         $('html, body').animate({
             scrollTop: offset.top
         });
-        if(data.myTurn){
             var form = $("<form><input type='text'></form>");
             var submit = $("<a>Add</a>");
             var edit = $("edit");
@@ -52,6 +51,5 @@ $(document).ready(function() {
                     dataType: "json"
                 });
             })
-        }
     });
 });
