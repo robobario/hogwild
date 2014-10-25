@@ -59,10 +59,8 @@ public class HogWildMicrosoftCallbackServlet extends HttpServlet {
             JsonNode jsonNode = new ObjectMapper().reader().readTree(resourceResponse.getBody());
             JsonNode email = jsonNode.get("emails").get("account");
             SessionStore.sessionStore().addUser(session.getId(), email.textValue());
-            resp.sendRedirect("/");
         } catch (Exception e) {
             e.printStackTrace(resp.getWriter());
-            throw new RuntimeException(e);
         }
     }
 }
