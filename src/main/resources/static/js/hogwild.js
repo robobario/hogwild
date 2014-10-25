@@ -38,7 +38,7 @@ $(document).ready(function() {
             scrollTop: offset.top
         });
             var form = $("<form></form>");
-            var input = $("<input type='textarea'></form>");
+            var input = $("<textarea></textarea>");
             var submit = $("<a>Add</a>");
             var edit = $("#edit");
             form.append(input);
