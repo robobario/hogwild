@@ -46,7 +46,7 @@ public class HogWildMicrosoftCallbackServlet extends HttpServlet {
                     .setClientSecret(secret)
                     .setRedirectURI("http://" + host + "/oauth2microsoft")
                     .setCode(code)
-                    .buildQueryMessage();
+                    .buildBodyMessage();
             OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
             OAuthJSONAccessTokenResponse oAuthResponse = oAuthClient.accessToken(request);
 
