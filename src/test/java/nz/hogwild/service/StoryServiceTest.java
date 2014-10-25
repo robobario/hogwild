@@ -59,6 +59,19 @@ public class StoryServiceTest {
     }
 
 
+    @Test
+    public void test6(){
+        Entry element = entryForAuthorId(1);
+        Entry element2 = entryForAuthorId(2);
+        Entry element3 = entryForAuthorId(4);
+        Entry element4 = entryForAuthorId(3);
+        Entry element5 = entryForAuthorId(1);
+        ImmutableList<Entry> of = ImmutableList.of(element,element2,element3,element4,element5);
+        List<Entry> visibleToUser = StoryService.getVisibleToUser(of, 4, ImmutableList.of(1, 2, 4,3));
+        assertEquals(ImmutableList.of(element, element2, element3), visibleToUser);
+    }
+
+
     private Entry entryForAuthorId(int id) {
         Entry element = new Entry();
         Author author = new Author();

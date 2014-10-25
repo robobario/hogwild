@@ -21,6 +21,7 @@ public class Story implements Serializable{
             inverseJoinColumns=
             @JoinColumn(name="author_id")
     )
+    @OrderColumn(name="author_index")
     private List<Author> authors;
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
