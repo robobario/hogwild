@@ -58,10 +58,5 @@ public class RootController {
         if(authorId != null){
             storyService.addEntryToStory(authorId,1, entry.getBody());
         }
-        try {
-            response.sendRedirect("/");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

@@ -48,6 +48,7 @@ $(document).ready(function() {
                 $.ajax({
                     type: "POST",
                     url: "/app/story",
+                    contentType:"application/json; charset=utf-8",
                     data: JSON.stringify({"body":input.val()}),
                     success: function(){},
                     dataType: "json"
