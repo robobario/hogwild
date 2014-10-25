@@ -39,7 +39,7 @@ $(document).ready(function() {
         });
             var form = $("<form><input type='text'></form>");
             var submit = $("<a>Add</a>");
-            var edit = $("edit");
+            var edit = $("#edit");
             edit.append(form);
             edit.append(submit);
             submit.click(function(){
