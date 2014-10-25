@@ -37,6 +37,7 @@ $(document).ready(function() {
         $('html, body').animate({
             scrollTop: offset.top
         });
+        if(data.myTurn) {
             var form = $("<form></form>");
             var input = $("<textarea></textarea>");
             var submit = $("<a>Add</a>");
@@ -44,15 +45,17 @@ $(document).ready(function() {
             form.append(input);
             edit.append(form);
             edit.append(submit);
-            submit.click(function(){
+            submit.click(function () {
                 $.ajax({
                     type: "POST",
                     url: "/app/story",
-                    contentType:"application/json; charset=utf-8",
-                    data: JSON.stringify({"body":input.val()}),
-                    success: function(){},
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({"body": input.val()}),
+                    success: function () {
+                    },
                     dataType: "json"
                 });
             })
+        }
     });
 });

@@ -47,7 +47,7 @@ public class RootController {
 
 
     @RequestMapping(value = "/app/story", method = RequestMethod.POST)
-    public void addEntry(@RequestBody AddEntry entry, HttpServletRequest request,HttpServletResponse response){
+    public void addEntry(@RequestBody AddEntry entry, HttpServletRequest request){
         HttpSession session = request.getSession(true);
         String email = sessionStore.get(session.getId());
         Integer authorId = null;
