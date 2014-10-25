@@ -37,16 +37,18 @@ $(document).ready(function() {
         $('html, body').animate({
             scrollTop: offset.top
         });
-            var form = $("<form><input type='text'></form>");
+            var form = $("<form></form>");
+            var input = $("<input type='textarea'></form>");
             var submit = $("<a>Add</a>");
             var edit = $("#edit");
+            form.append(input);
             edit.append(form);
             edit.append(submit);
             submit.click(function(){
                 $.ajax({
                     type: "POST",
                     url: "/app/story",
-                    data: JSON.stringify({"body":form.value()}),
+                    data: JSON.stringify({"body":input.val()}),
                     success: function(){},
                     dataType: "json"
                 });
