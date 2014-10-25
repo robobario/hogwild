@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller("/")
@@ -45,8 +47,7 @@ public class RootController {
 
 
     @RequestMapping(value = "/app/story", method = RequestMethod.POST)
-    @ResponseBody
-    public boolean addEntry(@RequestBody AddEntry entry, HttpServletRequest request){
+    public void addEntry(@RequestBody AddEntry entry, HttpServletRequest request,HttpServletResponse response){
         HttpSession session = request.getSession(true);
         String email = sessionStore.get(session.getId());
         Integer authorId = null;
@@ -57,6 +58,10 @@ public class RootController {
         if(authorId != null){
             storyService.addEntryToStory(authorId,1, entry.getBody());
         }
-        return true;
+        try {
+            response.sendRedirect("/");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
